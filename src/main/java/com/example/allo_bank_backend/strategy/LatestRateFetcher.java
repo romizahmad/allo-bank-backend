@@ -1,5 +1,6 @@
 package com.example.allo_bank_backend.strategy;
 
+import com.example.allo_bank_backend.util.Unicode;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -10,8 +11,8 @@ import java.util.Map;
 public class LatestRateFetcher implements IDRDataFetcher {
     private final WebClient client;
 
-    @Value("${internal.spread-factor}")
-    private String spreadFactor;
+    @Value("${internal.git-username}")
+    private String gitUsername;
 
     public LatestRateFetcher(WebClient client) {
         this.client = client;
@@ -34,7 +35,9 @@ public class LatestRateFetcher implements IDRDataFetcher {
         Map<String, Double> rates = (Map<String, Double>) data.get("rates");
         double usdRate = rates.get("USD");
 
-        double spread = (1 / usdRate) * (1 + Double.parseDouble(spreadFactor));
+        double spreadFactor = Unicode.spreadFactor(gitUsername);
+
+        double spread = (1 / usdRate) * (1 + spreadFactor);
 
         data.put("USD_BuySpread_IDR", spread);
 
