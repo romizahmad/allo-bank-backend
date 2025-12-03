@@ -1,5 +1,6 @@
 package com.example.allo_bank_backend.strategy;
 
+import com.example.allo_bank_backend.util.Unicode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -15,11 +16,16 @@ public class HistoricalFetcher implements IDRDataFetcher {
 
     @Override
     public Object fetch() {
-        return client.get()
-                .uri("/2024-01-01..2024-01-05?from=IDR&to=USD")
-                .retrieve()
-                .bodyToMono(Map.class)
-                .block();
+        try {
+            return client.get()
+                    .uri("/2024-01-01..2024-01-05?from=IDR&to=USD")
+                    .retrieve()
+                    .bodyToMono(Map.class)
+                    .block();
+        } catch (Exception ex) {
+            throw new RuntimeException("Failed to fetch historical IDR to USD", ex);
+        }
+
     }
 
     @Override
