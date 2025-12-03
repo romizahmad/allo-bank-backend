@@ -2,16 +2,16 @@
 
 ###### clone:
 
-#### git clone https://github.com/romizahmad/allo-bank-backend.git
-#### cd allo-bank-backend
+#### `git clone https://github.com/romizahmad/allo-bank-backend.git`
+#### `cd allo-bank-backend`
 
 ###### build:
 
-#### mvn clean install
+#### `mvn clean install`
 
 ###### run:
 
-#### mvn spring-boot:run
+#### `mvn spring-boot:run`
 
 # Endpoint Usage
 
