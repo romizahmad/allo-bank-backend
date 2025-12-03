@@ -1,6 +1,7 @@
 package com.example.allo_bank_backend.controller;
 
 import com.example.allo_bank_backend.service.MemoryStoreService;
+import com.example.allo_bank_backend.util.ResponseBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,10 @@ public class FinanceController {
     public ResponseEntity<?> getData(@PathVariable String resourceType) {
         Object data = store.get(resourceType);
 
-        return ResponseEntity.ok(data);
+        if (data == null) {
+            return ResponseBuilder.notFound("Resource not found: " + resourceType);
+        }
+
+        return ResponseBuilder.success(data);
     }
 }
