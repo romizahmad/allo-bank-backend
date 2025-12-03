@@ -15,11 +15,15 @@ public class SupportedCurrenciesFetcher implements IDRDataFetcher{
 
     @Override
     public Object fetch() {
-        return client.get()
-                .uri("/currencies")
-                .retrieve()
-                .bodyToMono(Map.class)
-                .block();
+        try {
+            return client.get()
+                    .uri("/currencies")
+                    .retrieve()
+                    .bodyToMono(Map.class)
+                    .block();
+        } catch (Exception ex) {
+            throw new RuntimeException("Failed to fetch supported currencies", ex);
+        }
     }
 
     @Override
